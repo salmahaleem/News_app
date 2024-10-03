@@ -1,9 +1,14 @@
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../logic/news/news_cubit.dart';
-import 'details_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:news_app/news/logic/news/news_cubit.dart';
+import 'package:news_app/news/logic/theme/theme_cubit.dart';
+import '../../core/utils/color_mang.dart';
 import 'newsList.dart';
 
 class HomePage extends StatelessWidget{
@@ -12,48 +17,24 @@ class HomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title:Text("News"),
+      appBar: AppBar( title:Text("NEWS"),
       actions: [
-        IconButton(onPressed: (){}, icon: Icon(Icons.notification_add_rounded)),
-        IconButton(onPressed: (){}, icon: Icon(Icons.logout_outlined)),
+        DayNightSwitcherIcon(
+            dayBackgroundColor: ColorMang.blueLi,
+            nightBackgroundColor: ColorMang.darkBlue,
+            isDarkModeEnabled: context.read<ThemeCubit>().state.themeData.brightness ==
+               Brightness.dark,
+            onStateChanged: (value) {
+            context.read<ThemeCubit>().Toggle();
+          }),
+        IconButton(onPressed: (){}, icon: Icon(Icons.logout_outlined,)),
       ],
       ),
-      body: NewsList(),
+      body: NewsList()
     );
   }
 
 }
 
-class NewsList extends StatelessWidget{
-  const NewsList({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<NewsCubit,NewState>(builder: (context,state)
-    {
-      if (state is NewsLoaded){
-        ListView.builder(
-            itemCount: state.news.length,
-            itemBuilder: (context,index){
-              return TextButton(onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                    DetailsPage(title: state.news[index].title,des: state.news[index].des,)));
-              }, child: Text(state.news[index].title,style: TextStyle(color: Colors.red ,fontSize: 25),));
-            });
-        print("ooooooooook");
-      }
 
-      if (state is NewsLoading){
-        return const CircularProgressIndicator();
-      }
-
-      if(state is NewsFaller){
-        return Text(state.error);
-      }
-      return Center(
-        child:Text("No News")
-      );
-    });
-  }
-
-}

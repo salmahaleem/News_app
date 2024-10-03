@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/news/logic/news/news_cubit.dart';
+import 'package:news_app/news/model/news_model.dart';
 import 'package:news_app/news/ui/details_page.dart';
+
+import 'card_page.dart';
 
 class NewsList extends StatelessWidget{
   const NewsList({super.key});
@@ -12,23 +15,20 @@ class NewsList extends StatelessWidget{
     return BlocBuilder<NewsCubit,NewState>(builder: (context,state)
     {
       if (state is NewsLoading){
-        return const CircularProgressIndicator();
+        return Center(child: const CircularProgressIndicator());
       }
-       if (state is NewsLoaded){
-        ListView.builder(
+      else if (state is NewsLoaded){
+        return ListView.builder(
             itemCount: state.news.length,
             itemBuilder: (context,index){
-           return TextButton(onPressed: (){
-             Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                 DetailsPage(title: state.news[index].title,des: state.news[index].des,)));
-           }, child: Text(state.news[index].title));
-        });
+              return CardPage(newsModel: state.news[index],);
+            });
       }
-       if(state is NewsFaller){
-         return Text(state.error);
+      else if(state is NewsFaller){
+        return Text(state.error);
       }
-      return Container();
+      return Container(child: Text("No News"),);
     });
   }
-  
+
 }

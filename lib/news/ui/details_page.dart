@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailsPage extends StatelessWidget {
-  String title ;
-  String des;
+  String? title ;
+  String? des;
 
-  DetailsPage({super.key,required this.title,required this.des});
+  DetailsPage({super.key, this.title, this.des});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,9 @@ class DetailsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Text(title,style: TextStyle(fontSize: 30,color: Colors.red),),
-          SizedBox(height: 20,),
-          Text(des,style: TextStyle(fontSize: 20),),
+          Text(title!,style: TextStyle(fontSize: 30,color: Colors.red),),
+          SizedBox(height: 20.h,),
+          Text(des!,style: TextStyle(fontSize: 20),),
 
         ],
       ),

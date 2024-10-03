@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/news/ui/home_page.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app/core/utils/constant.dart';
+import 'package:news_app/core/utils/color_mang.dart';
+import 'package:news_app/core/utils/styles.dart';
+import 'package:news_app/core/utils/routes.dart';
+import 'news/logic/theme/theme_cubit.dart';
 import 'news/logic/news/news_cubit.dart';
 
 void main() {
   runApp(
     MultiBlocProvider(providers: [
-      BlocProvider(create: (_) => NewsCubit()..funcLoaded())
+      BlocProvider(create: (_) => NewsCubit()..getNews()),
+      BlocProvider(create: (_) => ThemeCubit()),
     ],
     child: const MyApp(),),
         );
@@ -19,15 +24,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
-        useMaterial3: true,
-      ),
-      home: const HomePage(),
-    );
+    return
+      BlocBuilder<ThemeCubit, ThemeState>(builder: (context , state)
+    {
+      return ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: state.themeData,
+          onGenerateRoute: AppRoutes().onGenerateRoute,
+          initialRoute: Constant.homePage,
+        ),
+      );
+    });
+
   }
 }
-
-
