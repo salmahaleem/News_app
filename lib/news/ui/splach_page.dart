@@ -16,7 +16,7 @@ class _SplachPageState extends State<SplachPage> {
 
   void initState(){
     Timer(Duration(seconds: 5),(){
-      Navigator.pushReplacementNamed(context, Constant.homePage);
+      Navigator.pushReplacementNamed(context, Constant.onBoarding);
     });
     super.initState();
   }

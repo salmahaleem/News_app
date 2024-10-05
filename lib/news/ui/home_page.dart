@@ -6,6 +6,7 @@ import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:news_app/core/utils/constant.dart';
 import 'package:news_app/news/logic/news/news_cubit.dart';
 import 'package:news_app/news/logic/theme/theme_cubit.dart';
 import '../../core/utils/color_mang.dart';
@@ -27,7 +28,9 @@ class HomePage extends StatelessWidget{
             onStateChanged: (value) {
             context.read<ThemeCubit>().Toggle();
           }),
-        IconButton(onPressed: (){}, icon: Icon(Icons.logout_outlined,)),
+        IconButton(onPressed: (){
+          Navigator.pushReplacementNamed(context, Constant.homePage);
+        }, icon: Icon(Icons.home_filled,)),
       ],
       ),
       body: NewsList()

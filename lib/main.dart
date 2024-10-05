@@ -11,7 +11,7 @@ import 'news/logic/news/news_cubit.dart';
 void main() {
   runApp(
     MultiBlocProvider(providers: [
-      BlocProvider(create: (_) => NewsCubit()..getNews()),
+      BlocProvider(create: (_) => NewsCubit()),
       BlocProvider(create: (_) => ThemeCubit()),
     ],
     child: const MyApp(),),
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: state.themeData,
           onGenerateRoute: AppRoutes().onGenerateRoute,
-          initialRoute: Constant.homePage,
+          initialRoute: Constant.splach,
         ),
       );
     });

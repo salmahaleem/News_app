@@ -66,12 +66,12 @@ class TextStyles {
   );
   static TextStyle descriptionTextDark = TextStyle(
     fontSize: 18,
-    color: Colors.white12,
+    color: Colors.grey,
   );
 
   static TextStyle authorTextDark = TextStyle(
     fontSize: 15,
-    color: ColorMang.blueLi,
+    color: ColorMang.moonColor,
     fontWeight: FontWeight.bold,
   );
 
